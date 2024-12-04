@@ -4,6 +4,10 @@ import json
 import tvdb_v4_official
 import pathlib
 from fuzzywuzzy import fuzz
+from colorama import Fore, Style, init
+
+# Initialize colorama
+init(autoreset=True)
 
 # Load configuration
 CONFIG_PATH = r"C:\Tools\Rename Series\config.json"
@@ -63,9 +67,6 @@ def extract_metadata(filename):
     print(f"Filename does not match any expected patterns: {filename}")
     return None, None, None, None
 
-
-
-
 def lookup_series_id(series_name):
     """
     Look up series ID using the extracted series name.
@@ -110,7 +111,7 @@ def lookup_episode_by_title(series, title):
     Match an episode using the title with fuzzy matching.
     """
     sanitized_title = sanitize_title(title)
-    print(f"Looking up episode for sanitized title: {sanitized_title}")
+    print(f"Looking up episode for sanitized title: {Fore.BLUE}{sanitized_title}{Style.RESET_ALL}")
     try:
         series_extended = tvdb.get_series_extended(series["id"])
         episodes = []
@@ -150,18 +151,17 @@ def rename_file(file_path, series_name, matched_episodes):
         new_name = f"{series_name} - S{episode['seasonNumber']:02d}E{episode['number']:02d} - {episode['name']}{original_extension}"
     else:
         first, second = matched_episodes
-        new_name = (f"{series_name} - S{first['seasonNumber']:02d}"
-                    f"E{first['number']:02d}-E{second['number']:02d} - "
+        new_name = (f"{series_name} - S{first['seasonNumber']:02d}E{first['number']:02d}-E{second['number']:02d} - "
                     f"{first['name']} + {second['name']}{original_extension}")
     
     new_path = os.path.join(directory, new_name)
 
     if file_path == new_path:
-        print(f"File currently meets formatting standards: {filename}")
+        print(f"{Fore.YELLOW}{Style.BRIGHT}File currently meets formatting standards: {Fore.GREEN}{filename}{Style.RESET_ALL}")
         return  # Skip renaming if the file already matches the desired format
 
     print(f"\nUsing this information, the file will be renamed from:")
-    print(f"{filename}\nTO\n{new_name}")
+    print(f"{Fore.GREEN}{filename}{Style.RESET_ALL}\nTO\n{Fore.GREEN}{new_name}{Style.RESET_ALL}")
     confirm = input("Continue? (Y/N): ").strip().lower()
     if confirm == 'y':
         os.rename(file_path, new_path)
@@ -184,17 +184,17 @@ def process_directory(directory, scan_subdirs=False):
             if not os.path.isfile(file_path) or pathlib.Path(filename).suffix.lower() not in VALID_VIDEO_EXTENSIONS:
                 continue
 
-            print(f"\nFile: {filename}")
+            print(f"\nProcessing file: {Fore.GREEN}{filename}{Style.RESET_ALL}")
             series_name, _, episode_range, extracted_title = extract_metadata(filename)
             if not series_name:
-                print(f"Skipping file: {filename}")
+                print(f"Skipping file: {Fore.GREEN}{filename}{Style.RESET_ALL} - Invalid metadata.")
                 continue
 
             # Look up the series ID
             if series_name != last_series_name:
                 series_id = lookup_series_id(series_name)
                 if not series_id:
-                    print(f"Skipping file: {filename}")
+                    print(f"Skipping file: {Fore.GREEN}{filename}{Style.RESET_ALL} - Invalid series ID.")
                     continue
                 matched_series = validate_series_id(series_id)
                 if not matched_series:
@@ -218,7 +218,7 @@ def process_directory(directory, scan_subdirs=False):
                 rename_file(file_path, matched_series["name"], matched_episodes)
             else:
                 print(f"Could not match all parts of the combined title: {extracted_title}")
-                print(f"Skipping file: {filename}")
+                print(f"Skipping file: {Fore.GREEN}{filename}{Style.RESET_ALL}")
 
         if not scan_subdirs:
             break
