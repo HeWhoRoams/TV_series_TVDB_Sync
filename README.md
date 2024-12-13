@@ -6,6 +6,7 @@ From there it uses some fuzzy matching logic to match the episode title with the
 
 Usage: I keep the config file in a tools directory on my C drive, and copy and paste the python script to whatever directory I am looking to parse and rename. The config file stays in that location.
 
+Note: you will need an account at TheTVDB.com and to request a free API key.
 
 File Renaming Script - Installation Guide
 
