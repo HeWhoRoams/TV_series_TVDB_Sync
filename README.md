@@ -23,11 +23,11 @@ Open a terminal or command prompt.
 
 Run the command:
 
-python --version
+    python --version
 
 or
 
-python3 --version
+    python3 --version
 
 If Python is installed, it will display the version number.
 
