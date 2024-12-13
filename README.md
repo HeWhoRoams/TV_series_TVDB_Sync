@@ -47,16 +47,16 @@ Use your package manager to install Python:
 
 For Debian/Ubuntu:
 
-sudo apt update
-sudo apt install python3 python3-pip
+    sudo apt update
+    sudo apt install python3 python3-pip
 
 For Fedora:
 
-sudo dnf install python3 python3-pip
+    sudo dnf install python3 python3-pip
 
 For Arch:
 
-sudo pacman -S python python-pip
+    sudo pacman -S python python-pip
 
 2. Install Git (optional, for downloading the script from GitHub)
 
@@ -70,9 +70,9 @@ Linux:
 
 Use your package manager to install Git:
 
-sudo apt install git      # Debian/Ubuntu
-sudo dnf install git      # Fedora
-sudo pacman -S git        # Arch
+    sudo apt install git      # Debian/Ubuntu
+    sudo dnf install git      # Fedora
+    sudo pacman -S git        # Arch
 
 3. Install Additional Tools
 
@@ -92,8 +92,8 @@ Step 1: Clone or Download the Script
 
 Using Git (recommended):
 
-git clone https://github.com/your-repo-name/rename-series.git
-cd rename-series
+    git clone https://github.com/your-repo-name/rename-series.git
+    cd rename-series
 
 Without Git:
 
@@ -107,11 +107,11 @@ Step 2: Install Dependencies
 
 Run the following command to install the required Python libraries:
 
-pip install tvdb_v4_official fuzzywuzzy colorama
+    pip install tvdb_v4_official fuzzywuzzy colorama
 
 If you encounter issues, ensure pip is installed by running:
 
-python -m ensurepip --upgrade
+    python -m ensurepip --upgrade
 
 Step 3: Configure the Script
 
@@ -131,11 +131,11 @@ Running the Script
 
 Navigate to the script directory:
 
-cd /path/to/script
+    cd /path/to/script
 
 Run the script:
 
-python rename_series.py
+    python rename_series.py
 
 Follow the prompts to rename files in the current directory or its subdirectories.
 
