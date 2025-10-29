@@ -1,180 +1,84 @@
-This python script was my answer to constantly acquiring media that was labeled with Season # and Episode # that didn't match TVDB, and thus imported into Sonarr incorrectly. 
-
-It parses through a directory and looks for media files (file extensions are in the config file). From there it extracts what data is can from the file name, looking for show name, Season, episode and episode title.
-It attempts to identify the series ID through the TVDB API, but allows for the user to override.
-From there it uses some fuzzy matching logic to match the episode title with the one on TVDB and then attempts to rename the file appropriately, prompting for confirmation.
-
-Usage: I keep the config file in a tools directory on my C drive, and copy and paste the python script to whatever directory I am looking to parse and rename. The config file stays in that location.
-
-Note: you will need an account at TheTVDB.com and to request a free API key.
-
----
-
-## TVDB_sync.py - TV Series Renamer & Sync Tool
+# TVDB_sync.py - TV Series Renamer & Sync Tool
 
 This Python script helps you rename and organize TV series files to match TVDB standards, ensuring correct import into Sonarr and other media managers.
 
-### Key Features
+## Key Features
 - Parses media files for show name, season, episode, and title
 - Uses TVDB API for series and episode matching
 - Fuzzy matching logic for episode titles
 - Automated and manual renaming options
 - **Test mode** for validating renaming logic in a controlled environment
 
-### Recent Major Changes (2025-10-28)
-- **Script renamed to `TVDB_sync.py`**
+## Recent Major Changes (2025-10-28)
+- Script renamed to `TVDB_sync.py`
 - All references to the old name have been cleaned up
-- **Series folders moved to `test/` directory**
-- **Added `CHANGELOG.md` for tracking updates**
-- **Restored `.gitignore` and `config.template.json` for safe config management**
-- **Multi-episode detection and naming logic improved**
-- **Enhanced file processing and error handling**
-- **Test mode added for automated validation**
+- Series folders moved to `test/` directory
+- Added `CHANGELOG.md` for tracking updates
+- Restored `.gitignore` and `config.template.json` for safe config management
+- Multi-episode detection and naming logic improved
+- Enhanced file processing and error handling
+- Test mode added for automated validation
 
 See `CHANGELOG.md` for a detailed summary of today's changes and improvements.
 
 ---
 
-### Installation Guide
+## Quick Start
 
-This guide will walk you through installing the necessary tools and dependencies to use the File Renaming Script on both Linux and Windows.
-
-#### Prerequisites
-
-1. Python Installation
-
-This script requires Python 3.6 or higher.
-
-Check if Python is installed:
-
-Open a terminal or command prompt.
-
-Run the command:
-
-    python --version
-
-or
-
-    python3 --version
-
-If Python is installed, it will display the version number.
-
-Install Python (if not installed):
-
-Windows:
-
-Download the latest Python installer from the official Python website.
-
-Run the installer and check the box "Add Python to PATH" during installation.
-
-Complete the installation process.
-
-Linux:
-
-Use your package manager to install Python:
-
-For Debian/Ubuntu:
-
-    sudo apt update
-    sudo apt install python3 python3-pip
-
-For Fedora:
-
-    sudo dnf install python3 python3-pip
-
-For Arch:
-
-    sudo pacman -S python python-pip
-
-2. Install Git (optional, for downloading the script from GitHub)
-
-Windows:
-
-Download Git from the official website.
-
-Run the installer and follow the setup instructions. Select the recommended options for beginners.
-
-Linux:
-
-Use your package manager to install Git:
-
-    sudo apt install git      # Debian/Ubuntu
-    sudo dnf install git      # Fedora
-    sudo pacman -S git        # Arch
-
-3. Install Additional Tools
-
-This script uses the following Python libraries:
-
-- tvdb_v4_official
-- fuzzywuzzy
-- colorama
-
-You will also need a configuration file to store API keys and other settings.
-
-#### Step 1: Clone or Download the Script
-
-Using Git (recommended):
-
-    git clone https://github.com/HeWhoRoams/TV_series_TVDB_Sync.git
-    cd TV_series_TVDB_Sync
-
-Without Git:
-
-Go to the GitHub repository.
-Click Code > Download ZIP.
-Extract the ZIP file to your desired directory.
-
-#### Step 2: Install Dependencies
-
-Run the following command to install the required Python libraries:
-
-    pip install tvdb_v4_official fuzzywuzzy colorama
-
-If you encounter issues, ensure pip is installed by running:
-
-    python -m ensurepip --upgrade
-
-#### Step 3: Configure the Script
-
-Copy `config.template.json` to `config.json` and add your TVDB API key and settings.
-
-Example:
-
-{
-  "api_key": "your_tvdb_api_key",
-  "quality_tags": ["1080p", "720p", "WEBRip"],
-  "valid_extensions": [".mp4", ".mkv", ".avi"]
-}
-
-Save the file.
-
-#### Running the Script
-
-Navigate to the script directory:
-
-    cd /path/to/script
-
-Run the script:
-
-    python TVDB_sync.py
-
-Follow the prompts to rename files in the current directory or its subdirectories, or use test mode for automated validation.
+1. **Install Python 3.6+**
+   - [Download Python](https://www.python.org/downloads/) and install (check "Add Python to PATH").
+2. **Install Git (optional)**
+   - [Download Git](https://git-scm.com/downloads) and install.
+3. **Clone the Repository**
+   ```sh
+   git clone https://github.com/HeWhoRoams/TV_series_TVDB_Sync.git
+   cd TV_series_TVDB_Sync
+   ```
+4. **Install Dependencies**
+   ```sh
+   pip install tvdb_v4_official fuzzywuzzy colorama
+   ```
+5. **Configure the Script**
+   - Copy `config.template.json` to `config.json` and add your TVDB API key.
+6. **Run the Script**
+   ```sh
+   python TVDB_sync.py
+   ```
+   - Use test mode for automated validation: `python TVDB_sync.py --test`
 
 ---
 
-#### Troubleshooting
+## Troubleshooting
+- If you see `ModuleNotFoundError`, run `pip install tvdb_v4_official fuzzywuzzy colorama`.
+- For permission errors, run as administrator or use `sudo` on Linux.
+- For help, open an issue on GitHub.
 
-Common Issues:
+## Contributing
+Contributions are welcome! Fork the repo and submit a pull request.
 
-- "Command not found" or "ModuleNotFoundError":
-  - Ensure Python and required libraries are installed.
-  - Check that pip install completed successfully.
-- Permission Errors:
-  - On Linux, you may need to run the script with sudo if accessing protected directories.
+---
 
-Logging:
-The script provides detailed logs in the terminal. If you encounter issues, copy the error message and search for solutions or create an issue on the GitHub repository.
+## Test Mode
 
-#### Contributing
-If you'd like to contribute to this project, feel free to fork the repository and submit a pull request. Contributions are welcome!
+To run the script in test mode:
+
+    python TVDB_sync.py -t
+
+### What test mode does:
+1. Processes predefined test directories—looks for subdirectories named after TV shows
+2. Automatically renames files without asking for confirmation
+3. Validates against expected output—checks if renamed files match expected format
+4. Shows pass/fail results with success rate statistics
+5. Prompts to revert—asks if you want to restore original filenames after testing
+
+### Required setup:
+Create test directories in your root folder named after shows (e.g., Rosie's Rules, Daniel Tiger's Neighborhood) with improperly named files inside.
+
+#### Example:
+- Input: Abuela_s Birthday_Cat Mail.mp4
+- Expected: Rosie's Rules - S01E01E02 - Abuela's Birthday + Cat Mail.mp4
+- Test mode validates the rename matches this format
+
+After running, you'll see a summary showing how many tests passed vs failed, and you can choose to revert all changes back to original filenames.
+
+For full details, see the [CHANGELOG.md](CHANGELOG.md).
