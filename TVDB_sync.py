@@ -331,6 +331,16 @@ class SeriesRenamer:
             except Exception as e:
                 print(f"  {Fore.RED}Error renaming file: {e}")
                 logging.error(f"Failed to rename '{filename}': {e}")
+                # If file is in use, make a copy and rename the copy
+                if hasattr(e, 'winerror') and e.winerror == 32:
+                    import shutil
+                    try:
+                        shutil.copy2(file_path, new_path)
+                        print(f"  {Fore.YELLOW}File was in use. Copied and renamed instead.{Style.RESET_ALL}")
+                        logging.info(f"Copied and renamed '{filename}' to '{new_name}' due to file lock.")
+                    except Exception as copy_err:
+                        print(f"  {Fore.RED}Failed to copy and rename: {copy_err}")
+                        logging.error(f"Failed to copy and rename '{filename}': {copy_err}")
         else:
             print("  Skipping rename.")
             logging.warning(f"User skipped rename for '{filename}'.")
@@ -461,8 +471,10 @@ class SeriesRenamer:
                 highest_score, best_match = score, ep
         if best_match and highest_score >= match_threshold:
             print(f"Matched '{sanitized_title}' -> '{best_match['name']}' [Score: {highest_score}]")
+            logging.info(f"Matched '{sanitized_title}' -> '{best_match['name']}' [Score: {highest_score}]")
             return best_match
-        print(f"No match found for '{sanitized_title}'. Best score ({highest_score}) was below threshold ({match_threshold}).")
+        # Only log low-score matches and no-match info, do not print to console
+        logging.info(f"No match found for '{sanitized_title}'. Best score ({highest_score}) was below threshold ({match_threshold}).")
         return None
 
 
@@ -714,7 +726,10 @@ class SeriesRenamer:
         print(f"Total tests: {total_tests}")
         print(f"Passed: {passed_tests}")
         print(f"Failed: {total_tests - passed_tests}")
-        print(f"Success rate: {passed_tests/total_tests*100:.1f}% if total_tests > 0 else '0%'}")
+        if total_tests > 0:
+            print(f"Success rate: {passed_tests/total_tests*100:.1f}%")
+        else:
+            print("Success rate: 0%")
         
         for result in test_results:
             status = "PASS" if result['success'] else "FAIL"
