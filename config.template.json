@@ -1,0 +1,17 @@
+{
+  "api_key": "insert your TVDB API Key here",
+  "valid_extensions": [
+    ".mkv",
+    ".mp4",
+    ".avi"
+  ],
+  "quality_tags": [
+    "1080p",
+    "720p",
+    "HDTV",
+    "WEBRip"
+  ],
+  "naming_template": "{series_name} - S{season_num:02d}E{episode_num:02d} - {episode_title}",
+  "match_threshold": 50
+}
+

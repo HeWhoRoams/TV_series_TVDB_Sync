@@ -8,11 +8,38 @@ Usage: I keep the config file in a tools directory on my C drive, and copy and p
 
 Note: you will need an account at TheTVDB.com and to request a free API key.
 
-File Renaming Script - Installation Guide
+---
+
+## TVDB_sync.py - TV Series Renamer & Sync Tool
+
+This Python script helps you rename and organize TV series files to match TVDB standards, ensuring correct import into Sonarr and other media managers.
+
+### Key Features
+- Parses media files for show name, season, episode, and title
+- Uses TVDB API for series and episode matching
+- Fuzzy matching logic for episode titles
+- Automated and manual renaming options
+- **Test mode** for validating renaming logic in a controlled environment
+
+### Recent Major Changes (2025-10-28)
+- **Script renamed to `TVDB_sync.py`**
+- All references to the old name have been cleaned up
+- **Series folders moved to `test/` directory**
+- **Added `CHANGELOG.md` for tracking updates**
+- **Restored `.gitignore` and `config.template.json` for safe config management**
+- **Multi-episode detection and naming logic improved**
+- **Enhanced file processing and error handling**
+- **Test mode added for automated validation**
+
+See `CHANGELOG.md` for a detailed summary of today's changes and improvements.
+
+---
+
+### Installation Guide
 
 This guide will walk you through installing the necessary tools and dependencies to use the File Renaming Script on both Linux and Windows.
 
-Prerequisites
+#### Prerequisites
 
 1. Python Installation
 
@@ -79,32 +106,26 @@ Use your package manager to install Git:
 
 This script uses the following Python libraries:
 
-tvdb_v4_official
-
-fuzzywuzzy
-
-colorama
+- tvdb_v4_official
+- fuzzywuzzy
+- colorama
 
 You will also need a configuration file to store API keys and other settings.
 
-Installation Steps
-
-Step 1: Clone or Download the Script
+#### Step 1: Clone or Download the Script
 
 Using Git (recommended):
 
-    git clone https://github.com/your-repo-name/rename-series.git
-    cd rename-series
+    git clone https://github.com/HeWhoRoams/TV_series_TVDB_Sync.git
+    cd TV_series_TVDB_Sync
 
 Without Git:
 
 Go to the GitHub repository.
-
 Click Code > Download ZIP.
-
 Extract the ZIP file to your desired directory.
 
-Step 2: Install Dependencies
+#### Step 2: Install Dependencies
 
 Run the following command to install the required Python libraries:
 
@@ -114,21 +135,21 @@ If you encounter issues, ensure pip is installed by running:
 
     python -m ensurepip --upgrade
 
-Step 3: Configure the Script
+#### Step 3: Configure the Script
 
-Locate the config.json file in the script directory (or create one if it doesn't exist).
+Copy `config.template.json` to `config.json` and add your TVDB API key and settings.
 
-Edit the file to include your settings:
+Example:
 
 {
-    "api_key": "your_tvdb_api_key",
-    "quality_tags": ["1080p", "720p", "WEBRip"],
-    "valid_extensions": [".mp4", ".mkv", ".avi"]
+  "api_key": "your_tvdb_api_key",
+  "quality_tags": ["1080p", "720p", "WEBRip"],
+  "valid_extensions": [".mp4", ".mkv", ".avi"]
 }
 
 Save the file.
 
-Running the Script
+#### Running the Script
 
 Navigate to the script directory:
 
@@ -136,28 +157,24 @@ Navigate to the script directory:
 
 Run the script:
 
-    python rename_series.py
+    python TVDB_sync.py
 
-Follow the prompts to rename files in the current directory or its subdirectories.
+Follow the prompts to rename files in the current directory or its subdirectories, or use test mode for automated validation.
 
-Troubleshooting
+---
+
+#### Troubleshooting
 
 Common Issues:
 
-"Command not found" or "ModuleNotFoundError":
-
-Ensure Python and required libraries are installed.
-
-Check that pip install completed successfully.
-
-Permission Errors:
-
-On Linux, you may need to run the script with sudo if accessing protected directories.
+- "Command not found" or "ModuleNotFoundError":
+  - Ensure Python and required libraries are installed.
+  - Check that pip install completed successfully.
+- Permission Errors:
+  - On Linux, you may need to run the script with sudo if accessing protected directories.
 
 Logging:
-
 The script provides detailed logs in the terminal. If you encounter issues, copy the error message and search for solutions or create an issue on the GitHub repository.
 
-Contributing
-
+#### Contributing
 If you'd like to contribute to this project, feel free to fork the repository and submit a pull request. Contributions are welcome!
