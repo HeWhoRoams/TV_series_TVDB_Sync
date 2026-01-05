@@ -360,14 +360,11 @@ class SeriesRenamer:
         basename = path.stem
         extension = path.suffix
         
-        # Replace dots, underscores, and hyphens with spaces
-        # Use a regex that avoids replacing dots between digits (e.g., v1.2)
-        # First, replace underscores and hyphens
-        normalized = re.sub(r'[_]', ' ', basename)
+        # Replace underscores and hyphens with spaces
+        normalized = re.sub(r'[_-]', ' ', basename)
         
-        # Replace dots that are NOT between digits
-        # This regex matches a dot that is not both preceded and followed by a digit
-        normalized = re.sub(r'(?<!\d)\.|\.(?!\d)', ' ', normalized)
+        # Replace dots that are not between two digits (preserves v1.2, 1.5, etc.)
+        normalized = re.sub(r'(?<!\d)\.(?!\d)', ' ', normalized)
         
         # Collapse multiple spaces
         normalized = re.sub(r'\s+', ' ', normalized).strip()
