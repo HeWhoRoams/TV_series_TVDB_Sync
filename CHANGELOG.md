@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-01-05
+
+### Summary of Changes
+
+1. **Fixed Dot-Separated Filename Matching**
+   - Added `_normalize_filename` to convert internal dots, underscores, and hyphens to spaces while preserving extensions and decimal points.
+   - This prevents dot-separated filenames from failing title extraction and triggering false-positive multi-episode matches.
+2. **Improved Title Extraction**
+   - Added a new regex pattern to `_extract_metadata` to handle space-separated season/episode patterns (e.g., `Show S01E01 Title`).
+3. **Enhanced Matching Robustness**
+   - Implemented short-token filtering in `_find_episode_by_title_in_list` to skip common short words (e.g., "du", "le", "sur") that cause spurious matches.
+   - Added deduplication of matched episodes in `_match_episodes_from_titles` and `_iterative_episode_match`.
+
 ## 2025-10-28
 
 ### Summary of Changes Made Today

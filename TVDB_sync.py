@@ -96,8 +96,11 @@ class SeriesRenamer:
 
         # Step 4: Loop through the consolidated list of files and process each one.
         for file_path in sorted(files_to_process):
-            filename = os.path.basename(file_path)
-            print(f"\n---\nProcessing file: {Fore.YELLOW}{filename}{Style.RESET_ALL}")
+            original_filename = os.path.basename(file_path)
+            filename = self._normalize_filename(original_filename)
+            print(f"\n---\nProcessing file: {Fore.YELLOW}{original_filename}{Style.RESET_ALL}")
+            if filename != original_filename:
+                print(f"Normalized filename for matching: '{Fore.CYAN}{filename}{Style.RESET_ALL}'")
             
             extracted_title = self._extract_metadata(filename)
             if not extracted_title:
@@ -348,6 +351,29 @@ class SeriesRenamer:
     def _sanitize_filename(self, filename):
         return re.sub(r'[<>:"/\\|?*]', '', filename)
 
+    def _normalize_filename(self, filename):
+        """
+        Normalizes a filename by replacing internal dots, underscores, and hyphens with spaces,
+        while preserving the file extension and avoiding decimal points in numbers.
+        """
+        path = pathlib.Path(filename)
+        basename = path.stem
+        extension = path.suffix
+        
+        # Replace dots, underscores, and hyphens with spaces
+        # Use a regex that avoids replacing dots between digits (e.g., v1.2)
+        # First, replace underscores and hyphens
+        normalized = re.sub(r'[_]', ' ', basename)
+        
+        # Replace dots that are NOT between digits
+        # This regex matches a dot that is not both preceded and followed by a digit
+        normalized = re.sub(r'(?<!\d)\.|\.(?!\d)', ' ', normalized)
+        
+        # Collapse multiple spaces
+        normalized = re.sub(r'\s+', ' ', normalized).strip()
+        
+        return f"{normalized}{extension}"
+
     def _sanitize_title(self, title):
         quality_pattern = r'\b(?:' + '|'.join(map(re.escape, self.quality_tags)) + r')\b'
         sanitized = re.sub(quality_pattern, '', title, flags=re.IGNORECASE)
@@ -357,7 +383,8 @@ class SeriesRenamer:
         clean_filename = os.path.splitext(filename)[0]
         patterns = [
             r"^(?P<series>.*?) - [sS](?P<season>\d{1,2})[eE](?P<ep_start>\d{2})(?:-[eE](?P<ep_end>\d{2}))? - (?P<title>.*)$",
-            r"^(?P<series>.*?)[. ]-[. ]?[sS](?P<season>\d{1,2})[eE](?P<ep_start>\d{2})(?:-[eE](?P<ep_end>\d{2}))?[. ](?P<title>.*)$"
+            r"^(?P<series>.*?)[. ]-[. ]?[sS](?P<season>\d{1,2})[eE](?P<ep_start>\d{2})(?:-[eE](?P<ep_end>\d{2}))?[. ](?P<title>.*)$",
+            r"^(?P<series>.*?) [sS](?P<season>\d{1,2})[eE](?P<ep_start>\d{2})(?:-[eE](?P<ep_end>\d{2}))? (?P<title>.*)$"
         ]
         for pattern in patterns:
             match = re.match(pattern, clean_filename)
@@ -411,7 +438,13 @@ class SeriesRenamer:
                     used_indices.add(i)
         
         # Extract just the episodes from selected matches
-        matched_episodes = [match[2] for match in selected_matches]
+        matched_episodes = []
+        matched_ids = set()
+        for match in selected_matches:
+            episode = match[2]
+            if episode['id'] not in matched_ids:
+                matched_episodes.append(episode)
+                matched_ids.add(episode['id'])
         
         return matched_episodes
 
@@ -439,6 +472,7 @@ class SeriesRenamer:
         """Helper method to match multiple episode titles against all episodes and return results."""
         matched_episodes = []
         all_parts_matched = True
+        matched_ids = set()
 
         for title_part in episode_titles:
             # Skip matching if the title part is empty after cleaning
@@ -447,7 +481,9 @@ class SeriesRenamer:
 
             episode = self._find_episode_by_title_in_list(all_episodes, title_part)
             if episode:
-                matched_episodes.append(episode)
+                if episode['id'] not in matched_ids:
+                    matched_episodes.append(episode)
+                    matched_ids.add(episode['id'])
             else:
                 all_parts_matched = False
                 # Don't break here to allow checking all parts
@@ -462,6 +498,13 @@ class SeriesRenamer:
     def _find_episode_by_title_in_list(self, episodes, title):
         sanitized_title = self._sanitize_title(title)
         if not episodes or not sanitized_title: return None
+        
+        # Skip very short titles to avoid spurious matches (e.g., "du", "le", "sur")
+        # unless the original title was also very short.
+        if len(sanitized_title) < 3 and len(title) < 5:
+            logging.info(f"Skipping match for very short title: '{sanitized_title}'")
+            return None
+
         match_threshold = self.config.get("match_threshold", 85)
         best_match, highest_score = None, 0
         for ep in episodes:
@@ -555,8 +598,11 @@ class SeriesRenamer:
                 }
                 
                 # Process the file using existing logic (non-interactive)
-                filename = os.path.basename(file_path)
-                print(f"  Processing file: {Fore.YELLOW}{filename}{Style.RESET_ALL}")
+                original_filename = os.path.basename(file_path)
+                filename = self._normalize_filename(original_filename)
+                print(f"  Processing file: {Fore.YELLOW}{original_filename}{Style.RESET_ALL}")
+                if filename != original_filename:
+                    print(f"  Normalized filename for matching: '{Fore.CYAN}{filename}{Style.RESET_ALL}'")
                 
                 extracted_title = self._extract_metadata(filename)
                 if not extracted_title:

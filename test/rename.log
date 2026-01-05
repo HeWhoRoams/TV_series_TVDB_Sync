@@ -1,0 +1,40 @@
+2026-01-05 15:00:42,487 - INFO - Series confirmed for this run: Rosie's Rules (ID: 425455)
+2026-01-05 15:00:43,314 - INFO - Cached 89 episodes for series ID 425455.
+2026-01-05 15:00:43,895 - INFO - Series confirmed for this run: Daniel Tiger's Neighborhood (ID: 261511)
+2026-01-05 15:00:45,915 - INFO - Cached 304 episodes for series ID 261511.
+2026-01-05 15:00:45,918 - INFO - Matched 'daniel and margaret play school' -> 'Daniel and Margaret Play School' [Score: 100]
+2026-01-05 15:00:45,919 - INFO - Matched 'treasure hunt at the castle' -> 'Treasure Hunt at the Castle' [Score: 100]
+2026-01-05 15:01:38,893 - INFO - Script started in single-series mode for directory: c:\Tools\Rename Series\test\Science grand format
+2026-01-05 15:01:39,455 - INFO - Series confirmed for this run: Science grand format (ID: 341711)
+2026-01-05 15:01:42,063 - INFO - Cached 335 episodes for series ID 341711.
+2026-01-05 15:01:42,066 - INFO - Matched 'Carnac sur les traces du royaume disparu' -> 'Carnac, sur les traces du royaume disparu' [Score: 99]
+2026-01-05 15:01:42,067 - INFO - No match found for 'Carnac'. Best score (43) was below threshold (85).
+2026-01-05 15:01:42,067 - INFO - No match found for 'Carnac sur'. Best score (44) was below threshold (85).
+2026-01-05 15:01:42,068 - INFO - No match found for 'Carnac sur les'. Best score (51) was below threshold (85).
+2026-01-05 15:01:42,069 - INFO - No match found for 'Carnac sur les traces'. Best score (68) was below threshold (85).
+2026-01-05 15:01:42,070 - INFO - No match found for 'Carnac sur les traces du'. Best score (74) was below threshold (85).
+2026-01-05 15:01:42,071 - INFO - Matched 'Carnac sur les traces du royaume' -> 'Carnac, sur les traces du royaume disparu' [Score: 88]
+2026-01-05 15:01:42,072 - INFO - Matched 'Carnac sur les traces du royaume disparu' -> 'Carnac, sur les traces du royaume disparu' [Score: 99]
+2026-01-05 15:01:42,073 - INFO - No match found for 'sur'. Best score (29) was below threshold (85).
+2026-01-05 15:01:42,074 - INFO - No match found for 'sur les'. Best score (44) was below threshold (85).
+2026-01-05 15:01:42,075 - INFO - No match found for 'sur les traces'. Best score (68) was below threshold (85).
+2026-01-05 15:01:42,076 - INFO - No match found for 'sur les traces du'. Best score (77) was below threshold (85).
+2026-01-05 15:01:42,077 - INFO - No match found for 'sur les traces du royaume'. Best score (81) was below threshold (85).
+2026-01-05 15:01:42,078 - INFO - Matched 'sur les traces du royaume disparu' -> 'Carnac, sur les traces du royaume disparu' [Score: 89]
+2026-01-05 15:01:42,079 - INFO - No match found for 'les'. Best score (55) was below threshold (85).
+2026-01-05 15:01:42,080 - INFO - No match found for 'les traces'. Best score (67) was below threshold (85).
+2026-01-05 15:01:42,081 - INFO - No match found for 'les traces du'. Best score (71) was below threshold (85).
+2026-01-05 15:01:42,082 - INFO - No match found for 'les traces du royaume'. Best score (71) was below threshold (85).
+2026-01-05 15:01:42,083 - INFO - No match found for 'les traces du royaume disparu'. Best score (83) was below threshold (85).
+2026-01-05 15:01:42,084 - INFO - No match found for 'traces'. Best score (43) was below threshold (85).
+2026-01-05 15:01:42,084 - INFO - No match found for 'traces du'. Best score (52) was below threshold (85).
+2026-01-05 15:01:42,085 - INFO - No match found for 'traces du royaume'. Best score (59) was below threshold (85).
+2026-01-05 15:01:42,086 - INFO - No match found for 'traces du royaume disparu'. Best score (76) was below threshold (85).
+2026-01-05 15:01:42,086 - INFO - Skipping match for very short title: 'du'
+2026-01-05 15:01:42,087 - INFO - No match found for 'du royaume'. Best score (48) was below threshold (85).
+2026-01-05 15:01:42,088 - INFO - No match found for 'du royaume disparu'. Best score (64) was below threshold (85).
+2026-01-05 15:01:42,089 - INFO - No match found for 'royaume'. Best score (42) was below threshold (85).
+2026-01-05 15:01:42,090 - INFO - No match found for 'royaume disparu'. Best score (65) was below threshold (85).
+2026-01-05 15:01:42,091 - INFO - No match found for 'disparu'. Best score (54) was below threshold (85).
+2026-01-05 15:01:42,091 - INFO - [DRY RUN] Would rename 'Science.grand.format.Carnac.sur.les.traces.du.royaume.disparu.mkv' to 'Science grand format - S06E18 - Carnac, sur les traces du royaume disparu.mkv'.
+2026-01-05 15:01:42,091 - INFO - Script finished.
